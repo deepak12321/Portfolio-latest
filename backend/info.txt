@@ -1,0 +1,4 @@
+multer --> for uploading the files
+-> Taking file from user to local storage for temporary period using multer and then uploading to cloudnary.
+
+cloudnary --> to upload the file

@@ -97,7 +97,7 @@ const Home = () => {
           <Education />
         </div>
 
-        <div className="certification-content">
+        <div className="certification-content ">
           <Certifications />
         </div>
       </div>
