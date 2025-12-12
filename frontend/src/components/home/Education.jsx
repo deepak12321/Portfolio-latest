@@ -13,70 +13,70 @@ const Education = () => {
     const cards = gsap.utils.toArray(educationInstRef.current.children);
     const mm = gsap.matchMedia();
 
-    mm.add({
-      isMobile: "(max-width: 768px)",
-      isDesktop: "(min-width: 769px)",
-    }, (context) => {
-      let { isMobile, isDesktop } = context.conditions;
+    mm.add(
+      {
+        isMobile: "(max-width: 768px)",
+        isDesktop: "(min-width: 769px)",
+      },
+      (context) => {
+        let { isMobile, isDesktop } = context.conditions;
 
-      ScrollTrigger.create({
-        trigger: educationData.current,
-        markers: true,
-        start: isDesktop ? "top 10%" : "top 30%",
-        end: isDesktop ? "bottom " : "200%",
-        pin: educationImgRef.current,
-      });
-
-      cards.forEach((card, index) => {
         ScrollTrigger.create({
-          trigger: card,
+          trigger: educationData.current,
           // markers: true,
-          start: "top 50%",
-          end: "bottom 50%",
-          onEnter: () => {
-            // Create a timeline for smooth scale + fade animation
-            const tl = gsap.timeline();
-            tl.to(educationImgRef.current, {
-              opacity: 0,
-              scale: 0.95,
-              duration: 0.25,
-              ease: "power2.in",
-            })
-              .call(() => {
-                setCurrentImg(educationData[index].image);
-              })
-              .to(educationImgRef.current, {
-                opacity: 1,
-                scale: 1,
-                duration: 0.25,
-                ease: "power2.out",
-              });
-          },
-          onEnterBack: () => {
-            // Create a timeline for smooth scale + fade animation
-            const tl = gsap.timeline();
-            tl.to(educationImgRef.current, {
-              opacity: 0,
-              scale: 0.95,
-              duration: 0.25,
-              ease: "power2.in",
-            })
-              .call(() => {
-                setCurrentImg(educationData[index].image);
-              })
-              .to(educationImgRef.current, {
-                opacity: 1,
-                scale: 1,
-                duration: 0.25,
-                ease: "power2.out",
-              });
-          },
+          start: isDesktop ? "top 10%" : "top 30%",
+          end: isDesktop ? "bottom " : "200%",
+          pin: educationImgRef.current,
         });
-      });
 
-    })
-
-
+        cards.forEach((card, index) => {
+          ScrollTrigger.create({
+            trigger: card,
+            // markers: true,
+            start: "top 50%",
+            end: "bottom 50%",
+            onEnter: () => {
+              // Create a timeline for smooth scale + fade animation
+              const tl = gsap.timeline();
+              tl.to(educationImgRef.current, {
+                opacity: 0,
+                scale: 0.95,
+                duration: 0.25,
+                ease: "power2.in",
+              })
+                .call(() => {
+                  setCurrentImg(educationData[index].image);
+                })
+                .to(educationImgRef.current, {
+                  opacity: 1,
+                  scale: 1,
+                  duration: 0.25,
+                  ease: "power2.out",
+                });
+            },
+            onEnterBack: () => {
+              // Create a timeline for smooth scale + fade animation
+              const tl = gsap.timeline();
+              tl.to(educationImgRef.current, {
+                opacity: 0,
+                scale: 0.95,
+                duration: 0.25,
+                ease: "power2.in",
+              })
+                .call(() => {
+                  setCurrentImg(educationData[index].image);
+                })
+                .to(educationImgRef.current, {
+                  opacity: 1,
+                  scale: 1,
+                  duration: 0.25,
+                  ease: "power2.out",
+                });
+            },
+          });
+        });
+      }
+    );
   });
   return (
     <>
