@@ -152,7 +152,7 @@ Portfolio/
 
 1. **Clone the repository**
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/deepak12321/portfolio-latest.git
    cd Portfolio
    ```
 
@@ -280,9 +280,9 @@ All rights reserved © 2025
 
 **Deepak Phulara**
 
-- Portfolio: [Your Portfolio URL]
+- Portfolio: [Deepak Phulara Portfolio](deepakphulara.netlify.app)
 - GitHub: [@deepak12321](https://github.com/deepak12321)
-- LinkedIn: [Your LinkedIn Profile]
+- LinkedIn: [deepakphulara](https://www.linkedin.com/in/deepakphulara/)
 
 ---
 
