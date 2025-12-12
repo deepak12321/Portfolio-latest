@@ -6,6 +6,7 @@ import Contact from "./components/contact/Contact";
 import ThemeSwitch from "./components/global/ThemeSwitch";
 import Lenis from "lenis";
 import AdminPage from "./components/admin/AdminPage";
+import AddSkill from "./components/admin/AddSkill";
 
 const App = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -22,6 +23,7 @@ const App = () => {
           <Route path="/" element={<Home />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/deepak/admin" element={<AdminPage />} />
+          <Route path="/deepak/admin/add-skill" element={<AddSkill />} />
         </Routes>
       </div>
       <div className="footer mt-10 uppercase text-center pb-3 bg-linear-to-br from-slate-900 via-purple-900 to-slate-900">

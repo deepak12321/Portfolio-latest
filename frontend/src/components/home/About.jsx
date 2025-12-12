@@ -9,66 +9,70 @@ const About = () => {
 
   useGSAP(() => {
     const screenSize = gsap.matchMedia();
-    const aboutTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".heading-container",
-        // markers: true,
-        start: "top 10%",
-        end: "bottom 30%",
-        scrub: 1,
-        pin: true,
-        fastScrollEnd: true,
-      },
-    });
+    let mm = gsap.matchMedia();
 
-    screenSize.add("(max-width: 768px)", () => {});
-    screenSize.add("(min-width: 769px)", () => {});
-
-    aboutTimeline
-      .from([".text1", ".text3"], {
-        xPercent: -180,
-        duration: 3,
-      })
-      .from(
-        ".text2",
-        {
-          xPercent: 180,
-          duration: 3,
-        },
-        0
-      )
-      .to([".text1"], {
-        yPercent: 100,
-      })
-      .to(
-        ".text3",
-        {
-          yPercent: -100,
-        },
-        3
-      )
-      .to([".text1", ".text2", ".text3"], {
-        scale: 0.8,
-      });
-
-    gsap.fromTo(
-      ".about-text",
+    mm.add(
       {
-        opacity: 0,
+        isMobile: "(max-width: 500px)",
+        // isTablet:"(max-width: 1024px)",
+        isDesktop: "(min-width: 1025px)",
       },
-      {
-        y: -150,
-        autoAlpha: 1,
-        opacity: 1,
-        scrollTrigger: {
-          trigger: ".about-text",
-          markers: false,
-          start: "top 80%",
-          end: "top 80%",
-          scrub: 1,
-        },
+
+      (context) => {
+        let { isMobile, isDesktop } = context.conditions;
+        const aboutTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".heading-container",
+            // markers: true,
+            start: isDesktop ? "top 10%" : "top 30%",
+            end: "bottom 30%",
+            scrub: 1,
+            pin: true,
+            fastScrollEnd: true,
+          },
+        });
+
+        aboutTimeline
+          .from([".text1", ".text3"], {
+            xPercent: -180,
+            duration: 3,
+          })
+          .from(
+            ".text2",
+            {
+              xPercent: 180,
+              duration: 3,
+            },
+            0
+          )
+          .to([".text1"], {
+            yPercent: 100,
+          })
+          .to(
+            ".text3",
+            {
+              yPercent: -100,
+            },
+            3
+          )
+          .to([".text1", ".text2", ".text3"], {
+            scale: 0.8,
+          })
+          .fromTo(
+            ".about-text",
+            {
+              opacity: 0,
+            },
+            {
+              y: isDesktop ? -150 : -120,
+              autoAlpha: 1,
+              opacity: 1,
+            }
+          );
       }
     );
+
+    gsap;
   });
 
   return (

@@ -11,34 +11,76 @@ const Education = () => {
 
   useGSAP(() => {
     const cards = gsap.utils.toArray(educationInstRef.current.children);
+    const mm = gsap.matchMedia();
 
-    ScrollTrigger.create({
-      trigger: educationData.current,
-      // markers: true,
-      start: "top 10%",
-      end: "bottom ",
-      pin: educationImgRef.current,
-    });
+    mm.add({
+      isMobile: "(max-width: 768px)",
+      isDesktop: "(min-width: 769px)",
+    }, (context) => {
+      let { isMobile, isDesktop } = context.conditions;
 
-    cards.forEach((card, index) => {
       ScrollTrigger.create({
-        trigger: card,
-        // markers: true,
-        start: "top 50%",
-        end: "bottom 50%",
-        onEnter: () => {
-          setCurrentImg(educationData[index].image);
-        },
-        onEnterBack: () => {
-          setCurrentImg(educationData[index].image);
-        },
-        ease: "power4.out",
+        trigger: educationData.current,
+        markers: true,
+        start: isDesktop ? "top 10%" : "top 30%",
+        end: isDesktop ? "bottom " : "200%",
+        pin: educationImgRef.current,
       });
-    });
+
+      cards.forEach((card, index) => {
+        ScrollTrigger.create({
+          trigger: card,
+          // markers: true,
+          start: "top 50%",
+          end: "bottom 50%",
+          onEnter: () => {
+            // Create a timeline for smooth scale + fade animation
+            const tl = gsap.timeline();
+            tl.to(educationImgRef.current, {
+              opacity: 0,
+              scale: 0.95,
+              duration: 0.25,
+              ease: "power2.in",
+            })
+              .call(() => {
+                setCurrentImg(educationData[index].image);
+              })
+              .to(educationImgRef.current, {
+                opacity: 1,
+                scale: 1,
+                duration: 0.25,
+                ease: "power2.out",
+              });
+          },
+          onEnterBack: () => {
+            // Create a timeline for smooth scale + fade animation
+            const tl = gsap.timeline();
+            tl.to(educationImgRef.current, {
+              opacity: 0,
+              scale: 0.95,
+              duration: 0.25,
+              ease: "power2.in",
+            })
+              .call(() => {
+                setCurrentImg(educationData[index].image);
+              })
+              .to(educationImgRef.current, {
+                opacity: 1,
+                scale: 1,
+                duration: 0.25,
+                ease: "power2.out",
+              });
+          },
+        });
+      });
+
+    })
+
+
   });
   return (
     <>
-      <div className="education-main-container overflow-x-hidden">
+      <div className="education-main-container mt-15 overflow-x-hidden">
         <div className="education-sub-container">
           <div className="education-headingn text-white text-7xl md:text-[17rem] text-center uppercase">
             Education
@@ -57,9 +99,9 @@ const Education = () => {
                 );
               })}
             </div>
-            <div className="image-section w-1/3 transition-all">
+            <div className="image-section w-1/3">
               <img
-                className="h-60 flex justify-center md:h-[60%] mr-4 object-cover"
+                className="h-60 flex justify-center md:h-[60%] mr-4 object-cover rounded-lg transform-gpu will-change-transform"
                 src={currentImg}
                 alt=""
                 ref={educationImgRef}

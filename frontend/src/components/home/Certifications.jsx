@@ -1,11 +1,11 @@
 import React from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import { PDFViewer } from "@react-pdf/renderer";
-import PdfRenderer from "../global/PdfRenderer";
 import PdfViewer from "../global/PdfViewer";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
+import certificateData from "../../data/certificatesData";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -52,17 +52,20 @@ const Certifications = () => {
   });
   return (
     <div className="main-education-container overflow-hidden ">
-      <div className="sub-education-container w-screen h-screen ">
-        <div className="education-heading flex justify-center text-[10rem] uppercase my-10 z-1 ">
+      <div className="sub-education-container w-screen ">
+        <div className="education-heading flex justify-center font-bold text-[3rem] sm:text-[7rem] md:text-[10rem] uppercase my-10 z-1 ">
           <div className="left">Certif</div>
           <div className="right">icates</div>
         </div>
 
-        <div className="pdf-section flex flex-wrap justify-center gap-3 w-[80%] m-auto ">
-          <PdfViewer />
-          <PdfViewer />
-          <PdfViewer />
-          <PdfViewer />
+        <div className="pdf-section flex flex-wrap justify-center gap-3 pb-8 w-[80%] m-auto ">
+          {certificateData.map((certificate, index) => (
+            <PdfViewer
+              key={index}
+              url={certificate.url}
+              name={certificate.name}
+            />
+          ))}
         </div>
       </div>
     </div>

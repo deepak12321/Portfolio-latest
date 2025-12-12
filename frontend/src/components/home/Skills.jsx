@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-
+import { useMediaQuery } from "react-responsive";
 import { skills as techStack } from "../../data/techStack";
 import * as Icons from "react-icons/di";
 import { useGSAP } from "@gsap/react";
@@ -19,53 +19,69 @@ import {
 } from "react-icons/di";
 
 const Skills = () => {
+  const isMobile = useMediaQuery({ query: "(max-width: 500px)" });
+  const isDesktop = useMediaQuery({ query: "(min-width: 700px)" });
   const skillHeadingRef = useRef();
   const skillsRef = useRef();
 
   useGSAP(() => {
     gsap.set(skillHeadingRef.current.children, { opacity: 0 });
-    const skillsTimeline = gsap.timeline({
-      scrollTrigger: {
-        trigger: skillHeadingRef.current,
-        markers: false,
-        scrub: 2,
-        pin: true,
-        top: 0,
-        fastScrollEnd: true,
+
+    const mm = gsap.matchMedia();
+
+    mm.add(
+      {
+        isMobile: "(max-width: 500px)",
+        // isTablet:"(max-width: 1024px)",
+        isDesktop: "(min-width: 1025px)",
       },
-    });
-    skillsTimeline
-      .to(skillHeadingRef.current.children, {
-        // y: "7.5rem",
-        opacity: 1,
-        stagger: 1,
-      })
-      .to(skillHeadingRef.current, {
-        // yPercent: 10,
-      })
-      .to(skillHeadingRef.current, {
-        scale: 0.5,
-        ease: "power1.out",
-      })
-      .to(skillHeadingRef.current.children, {
-        translateY: "100%",
-        ease: "power3.out",
-      });
+      (context) => {
+        let { isMobile, isDesktop } = context.conditions;
+
+        const skillsTimeline = gsap.timeline({
+          scrollTrigger: {
+            trigger: skillHeadingRef.current,
+            // markers: true,
+            scrub: 2,
+            pin: true,
+            start: isDesktop ? "top top" : "top 10%",
+            fastScrollEnd: true,
+          },
+        });
+        skillsTimeline
+          .to(skillHeadingRef.current.children, {
+            // y: "7.5rem",
+            opacity: 1,
+            stagger: 1,
+          })
+          .to(skillHeadingRef.current, {
+            // yPercent: 10,
+          })
+          .to(skillHeadingRef.current, {
+            scale: isDesktop ? 0.5 : 0.8,
+            ease: "power1.out",
+          })
+          .to(skillHeadingRef.current.children, {
+            translateY: isDesktop ? "100%" : "200%",
+            ease: "power3.out",
+          });
+
+        gsap.from(skillsRef.current.children, {
+          opacity: 0,
+          stagger: {
+            amount: 1,
+          },
+          scrollTrigger: {
+            trigger: skillsRef.current,
+            // markers: true,
+            start: "top 70%",
+            toggleActions: "play none none reverse",
+          },
+        });
+      }
+    );
 
     // skills card animation
-
-    gsap.from(skillsRef.current.children, {
-      opacity: 0,
-      stagger: {
-        amount: 1,
-      },
-      scrollTrigger: {
-        trigger: skillsRef.current,
-        markers: false,
-        start: "top 70%",
-        toggleActions: "play none none reverse",
-      },
-    });
   });
 
   return (
@@ -96,16 +112,18 @@ const Skills = () => {
                     <div class="holographic-card">
                       <div
                         key={index}
-                        className="skills-card  h-40 w-40  my-3 p-2 flex justify-between flex-col text-center border-2 rounded-2xl "
+                        className="skills-card  h-25 w-25 sm:h-40 sm:w-40  my-3 p-2 flex justify-between flex-col text-center border-2 rounded-2xl "
                       >
                         {Icon && (
                           <Icon
-                            size={100} // ✅ correct way to size react-icons
+                            size={isDesktop ? 100 : 50} // ✅ correct way to size react-icons
                             color={skill.color} // ✅ actual color from your array
                             className="mx-auto mb-2"
                           />
                         )}
-                        <p className="text-xl">{skill.name}</p>
+                        <p className=" text-[0.8rem] sm:text-xl">
+                          {skill.name}
+                        </p>
                       </div>
                     </div>
                   </div>

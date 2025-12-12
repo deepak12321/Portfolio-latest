@@ -1,15 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import navLogoLight from "../../../public/assets/navLogoLight.svg";
-import navLogoDark from "../../../public/assets/navLogoDark.svg";
+import navLogoDark from "/assets/navLogoDark.svg";
 import "../../stylings/navbar.css";
 
 const Navbar = ({ darkMode, setDarkMode }) => {
-  if (darkMode) {
-    console.log("darkmode is active");
-  } else {
-    console.log("lightmode is active");
-  }
+
 
   return (
     <>
@@ -18,7 +13,7 @@ const Navbar = ({ darkMode, setDarkMode }) => {
           <div className="navbar-image ">
             <img
               className=" h-9 mt-5 md:mt-0 md:h-15"
-              src={darkMode ? navLogoDark : navLogoLight}
+              src={navLogoDark}
               alt="logo"
             />
           </div>

@@ -21,6 +21,9 @@ app.use(express.static("public"));
 import certificateRouter from "../routes/certificates.routes.js";
 app.use("/certificates", certificateRouter);
 
+import skillsRouter from "../routes/skills.routes.js";
+app.use("/skills", skillsRouter);
+
 app.get("/health", (request, response) => {
   response.status(200).json({
     statusCode: 200,

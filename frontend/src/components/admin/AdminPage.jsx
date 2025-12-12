@@ -1,8 +1,22 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axios from "axios";
+import { useEffect } from "react";
 
 const AdminPage = () => {
   const [file, setFile] = useState(null);
+  const [skills, setSkills] = useState([]);
+
+
+  const fetchData = async () => {
+    console.log("Fetching data");
+    const data = await axios.get("http://localhost:8000/skills/get-skills");
+    setSkills(data.data.data);
+    console.log(data.data.data);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault(); // stop page reload
@@ -50,10 +64,19 @@ const AdminPage = () => {
         </button>
       </form>
 
-      <img
-        src="http://res.cloudinary.com/da4zjlhwu/image/upload/v1765443818/vbbtm9e389deo7bcgpvh.png"
-        alt=""
-      />
+      <div>
+        {
+          skills.map((skill, index) => {
+            return (
+              <div key={index}>
+                <h1 className="text-white">{skill.skill_name}</h1>
+              </div>
+            );
+          })
+        }
+      </div>
+
+
     </div>
   );
 };
